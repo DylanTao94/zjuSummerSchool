@@ -2,13 +2,8 @@
      "button":[
         {	
           "type":"view",
-          "name":"hvkcoder",
-           "url":"http://blog.csdn.net/hvkcoder"
-        },
-        {	
-          "type":"click",
-          "name":"今日推荐",
-          "key":"today_recommend"
+          "name":"浙大暑校",
+           "url":"https://www.zju.edu.cn/"
         },
         {	
           "name":"小工具",
