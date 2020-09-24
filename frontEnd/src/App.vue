@@ -56,13 +56,12 @@ export default {
   },
   data: () => ({
     drawer: null,
-    openId: "123",
+    openId: "",
   }),
   components: {},
   created() {
-    this.prototype.openId = this.$route.query.openid
-    console.log(this.openId);
-    console.log(this.prototype.openId);
+    this.$store.commit('updateOpenId', this.$route.query.openId)
+    console.log(this.$store.state.openId)
   },
 };
 </script>

@@ -1,7 +1,7 @@
 
 <template>
   <v-main>
-    <v-container class="fill-height" fluid v-if="!submmited">
+    <v-container class="fill-height" fluid v-if="newUserFlag && !loadingPage">
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
@@ -18,6 +18,7 @@
               </v-tooltip>
             </v-toolbar>
             <v-card-text>
+              <v-alert type="error" :value="submitFailed" dismissible transition="scale-transition">输入信息有误</v-alert>
               <v-form>
                 <v-col class="d-flex" cols="12" sm="6">
                   <v-select v-model="selectedData.selectedState" :items="states" label="所在地区"></v-select>
@@ -66,7 +67,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-container class="fill-height" fluid v-if="submmited">
+    <v-container class="fill-height" fluid v-if="(!newUserFlag || submitSuccess) && !loadingPage">
       <v-row align="center" justify="center">
         <v-col cols="12" sm="8" md="4">
           <v-card class="elevation-12">
@@ -74,7 +75,7 @@
               <v-toolbar-title>个人信息</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
-              <v-alert outlined type="success" text dismissible>信息提交成功！</v-alert>
+              <v-alert outlined type="success" text dismissible :value="submitSuccess" transition="scale-transition">信息提交成功！</v-alert>
               <v-list-item two-line>
                 <v-list-item-content>
                   <v-list-item-title>所在地区</v-list-item-title>
@@ -123,32 +124,59 @@
 export default {
   name: "PersonalInfo",
   components: {},
-  props: {
-    openId: String,
-  },
-  mounted() {
-    console.log(this);
-  },
   methods: {
     submit: function () {
       let _this = this;
       _this.submitting = true;
+      _this.submitFailed = false;
+      console.log("now, is submitting.....")
+      console.log(this.$store.state.openId)
       axios
-        .post("https://653198e0a21e.ngrok.io/savePersonalInfo", {
-          selectedData: this.selectedData,
-          openId: this.openId,
+        .post("https://0e5d1870886e.ngrok.io/savePersonalInfo", {
+          selectedData: _this.selectedData,
+          openId: _this.$store.state.openId,
         })
         .then(function (response) {
-          _this.submmited = true;
-          _this.submitting = true;
           console.log(response);
+          console.log("summitted");
+          if(response.data.success == 0) {
+            console.log("summitt failed");
+            console.log(_this.submitFailed);
+            _this.submitFailed = true;
+            console.log();
+          } else {
+            _this.submitSuccess = true;
+            _this.newUserFlag = false;
+          }
+          _this.submitting = false;
         });
     },
   },
+  created() {
+    let _this = this;
+    axios
+        .get("https://0e5d1870886e.ngrok.io/getPersonalInfo?openId="+this.$store.state.openId)
+        .then(res=>{
+          _this.loadingPage = false;
+          console.log(`get info success and this is a success = ${res.data.success} user, where 0 represent new user, and 1 represent registed user`);
+          if (res.data.success == 1) {
+            // console.log(res.data)
+            // console.log("enter success")
+            _this.selectedData = res.data.result[0].selectedData
+            _this.hasInfo = true;
+            _this.newUserFlag = false;
+          } else {
+            _this.newUserFlag = true;
+          }
+        });
+  },
   data() {
     return {
+      loadingPage: true,
+      newUserFlag: false,
+      submitSuccess: false,
       submitting: false,
-      submmited: false,
+      submitFailed: false,
       selectedData: {
         selectedState: "",
         selectedCat: "",

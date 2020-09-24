@@ -69,6 +69,7 @@ app.post('/savePersonalInfo', function (req, res) {
     personalInfo.save().then(result => {
         res.json(result)
     }).catch(err => {
+        res.json({success:0})
         console.log(err);
     })
 })

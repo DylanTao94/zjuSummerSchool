@@ -296,7 +296,7 @@ WeChat.prototype.handleMsg = function (req, res) {
                 let data_JSON = JSON.parse(data);
                 // 将数据处理成为发送给微信的格式
                 if (result.content == "链接") {
-                    data_JSON.results[0].values.text = "https://5595e90cb6d3.ngrok.io?openid=" + result.fromUserName
+                    data_JSON.results[0].values.text = `https://2ba14454dddb.ngrok.io?openId=${result.fromUserName}`
                 }
                 reportMsg = msg.txtMsg(result.fromUserName, result.toUserName, data_JSON.results[0].values.text);
                 //返回给微信服务器

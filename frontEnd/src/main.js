@@ -14,9 +14,5 @@ new Vue({
   render: function (h) { return h(App) },
   vuetify,
   vuetify: new Vuetify(),
-  store,
-
-  props: {
-    source: String,
-  }
+  store // es6的写法，引入vuex
 }).$mount('#app')

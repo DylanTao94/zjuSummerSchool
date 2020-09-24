@@ -3,13 +3,13 @@ const Schema = mongoose.Schema; // define the structure of the data inside the d
 
 const personalInfoSchema = new Schema({
     selectedData: {
-        selectedState: String,
-        selectedCat: String,
-        selectedEducationLevel: String,
-        selectedUniversity: String,
-        selectedMajor: String
+        selectedState: { type: String, required: true },
+        selectedCat: { type: String, required: true },
+        selectedEducationLevel: { type: String, required: true },
+        selectedUniversity: { type: String, required: true },
+        selectedMajor: { type: String, required: true }
     },
-    openId: String
+    openId: { type: String, required: true, unique: true}
 })
 
 // 一般而言，model开头字母大写，
