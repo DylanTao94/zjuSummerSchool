@@ -51,15 +51,6 @@ export default {
     }
   },
   created(){
-    // this.$http.get('https://zjusummerschool-9c570.firebaseio.com/posts/' + this.id + ".json")
-    //   .then(function(data){
-    //     console.log(data);
-    //     return data.json();
-    //     // this.blog = data.body;
-    //   })
-    //   .then(function(data){
-    //     this.blog = data;
-    //   })
     this.hasInfo = false;
     if(!this.hasInfo) {
       this.personalInfoMsg = "点击此处补充";

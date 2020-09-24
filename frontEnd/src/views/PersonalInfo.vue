@@ -123,19 +123,25 @@
 export default {
   name: "PersonalInfo",
   components: {},
+  props: {
+    openId: String,
+  },
+  mounted() {
+    console.log(this);
+  },
   methods: {
     submit: function () {
       let _this = this;
       _this.submitting = true;
       axios
-        .post(
-          "https://zju4vue.firebaseio.com/posts.json",
-          this.selectedData,
-          this.openId
-        )
+        .post("https://653198e0a21e.ngrok.io/savePersonalInfo", {
+          selectedData: this.selectedData,
+          openId: this.openId,
+        })
         .then(function (response) {
           _this.submmited = true;
           _this.submitting = true;
+          console.log(response);
         });
     },
   },
@@ -150,7 +156,6 @@ export default {
         selectedUniversity: "",
         selectedMajor: "",
       },
-      openId: "sfahoiu212jnlka3091n",
       id: this.$route.params.id,
       states: ["New South Wales", "Victoria", "Queensland"],
       universities: {

@@ -56,20 +56,13 @@ export default {
   },
   data: () => ({
     drawer: null,
+    openId: "123",
   }),
   components: {},
-  beforeCreate() {
-    axios
-        .post(
-          "https://zju4vue.firebaseio.com/posts.json",
-          this.selectedData,
-          this.openId
-        )
-        .then(function (response) {
-          _this.submmited = true;
-          _this.submitting = true;
-        });
-    console.log(this.$route.query.openid);
+  created() {
+    this.prototype.openId = this.$route.query.openid
+    console.log(this.openId);
+    console.log(this.prototype.openId);
   },
 };
 </script>
