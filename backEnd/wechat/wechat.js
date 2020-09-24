@@ -29,6 +29,8 @@ var WeChat = function (config) {
     this.apiDomain = config.apiDomain;
     //设置 WeChat 对象属性 apiURL
     this.apiURL = config.apiURL;
+    //设置 后端服务器网址 对象属性 apiURL
+    this.frontendURL = config.frontendURL;
 
 
 
@@ -122,7 +124,9 @@ WeChat.prototype.auth = function (req, res) {
         //使用 Post 请求创建微信菜单
         that.requestPost(url, JSON.stringify(menus)).then(function (data) {
             //将结果打印
-            console.log(data);
+            console.log("********************");
+            console.log(`成功创建菜单`);
+            console.log("********************");
         });
     });
 
@@ -266,11 +270,10 @@ WeChat.prototype.handleMsg = function (req, res) {
                 }
             };
             console.log("********************");
-            console.log(result.content);
-            console.log(result.fromUserName);
+            console.log(`Get message from ${result.fromUserName}, the content is ${result.content}`);
             console.log("********************");
-            console.log(JSON.stringify(data2truningAI));
             // 发送json数据到图灵AI服务器
+            var _this = this;
             this.requestPost(this.turningAIURL, JSON.stringify(data2truningAI)).then(function (data) {
                 // 图灵机器人返回的数据格式为：
                 // var data = {
@@ -296,9 +299,12 @@ WeChat.prototype.handleMsg = function (req, res) {
                 let data_JSON = JSON.parse(data);
                 // 将数据处理成为发送给微信的格式
                 if (result.content == "链接") {
-                    data_JSON.results[0].values.text = `https://2ba14454dddb.ngrok.io?openId=${result.fromUserName}`
+                    data_JSON.results[0].values.text = `${_this.frontendURL}?openId=${result.fromUserName}`
                 }
                 reportMsg = msg.txtMsg(result.fromUserName, result.toUserName, data_JSON.results[0].values.text);
+                console.log("********************");
+                console.log(`Get message from Truning, the reply message is ${data_JSON.results[0].values.text}`);
+                console.log("********************");
                 //返回给微信服务器
                 res.send(reportMsg)
             });

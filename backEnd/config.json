@@ -9,6 +9,6 @@
     },
     "turningAIURL" : "http://openapi.tuling123.com/openapi/api/v2",
     "turningAIApiKey" : "9d4b7eef4dd84cc897b71e284dae7955",
-
+    "frontendURL": "https://2ba14454dddb.ngrok.io",
     "dbURI":"mongodb+srv://dylan:uKH4Tu1TrXt915dE@cluster0.z5u3f.mongodb.net/ZJU?retryWrites=true&w=majority"
 }
