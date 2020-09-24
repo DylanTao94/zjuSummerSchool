@@ -202,9 +202,10 @@ WeChat.prototype.handleMsg = function (req, res) {
     var result = {};
 
     result.toUserName = req.body.xml.tousername[0]; //接收方微信
-    result.fromUserName = req.body.xml.fromusername[0];//发送方openId
+    result.fromUserName = req.body.xml.fromusername[0];;//发送方openId
     result.createTime = req.body.xml.createtime[0]//发送时间
     result.msgType = req.body.xml.msgtype[0]//发送消息类型
+
     // 不同消息可能不含有以下信息，需先进行判断
     if (req.body.xml.content) {
         result.content = req.body.xml.content[0]//发送消息内容
@@ -261,9 +262,14 @@ WeChat.prototype.handleMsg = function (req, res) {
                 },
                 "userInfo": {
                     "apiKey": this.turningAIApiKey,
-                    "userId": result.fromUserName
+                    "userId": result.fromUserName.replace("-", "")
                 }
             };
+            console.log("********************");
+            console.log(result.content);
+            console.log(result.fromUserName);
+            console.log("********************");
+            console.log(JSON.stringify(data2truningAI));
             // 发送json数据到图灵AI服务器
             this.requestPost(this.turningAIURL, JSON.stringify(data2truningAI)).then(function (data) {
                 // 图灵机器人返回的数据格式为：
@@ -286,11 +292,15 @@ WeChat.prototype.handleMsg = function (req, res) {
                 //     ]
                 // }
                 // 将数据解析成JSON
+                // 如果是发送为个人信息，则返回链接；否则将信息交由图灵机器人处理
                 let data_JSON = JSON.parse(data);
                 // 将数据处理成为发送给微信的格式
+                if (result.content == "链接") {
+                    data_JSON.results[0].values.text = "https://5595e90cb6d3.ngrok.io?openid=" + result.fromUserName
+                }
                 reportMsg = msg.txtMsg(result.fromUserName, result.toUserName, data_JSON.results[0].values.text);
                 //返回给微信服务器
-                res.send(reportMsg);
+                res.send(reportMsg)
             });
     }
 

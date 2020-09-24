@@ -32,7 +32,8 @@
 
     <v-main>
       <v-container class="fill-height" fluid>
-        <router-view />
+        <!-- router view -->
+        <router-view /> 
         <v-row align="center" justify="center">
           <v-col class="text-center">
             <v-tooltip left>
@@ -57,6 +58,19 @@ export default {
     drawer: null,
   }),
   components: {},
+  beforeCreate() {
+    axios
+        .post(
+          "https://zju4vue.firebaseio.com/posts.json",
+          this.selectedData,
+          this.openId
+        )
+        .then(function (response) {
+          _this.submmited = true;
+          _this.submitting = true;
+        });
+    console.log(this.$route.query.openid);
+  },
 };
 </script>
 <style>

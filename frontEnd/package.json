@@ -9,7 +9,8 @@
   "dependencies": {
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
-    "vuetify": "^2.3.10"
+    "vuetify": "^2.3.10",
+    "weixin-js-sdk": "^1.6.0"
   },
   "devDependencies": {
     "@mdi/font": "^5.5.55",

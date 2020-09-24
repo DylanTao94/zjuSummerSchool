@@ -1,0 +1,12 @@
+{
+    "token":"wechat",
+    "appID":"wx3f83e23715127120",
+    "appScrect":"63b059a35abf1b48a4cfd409a010827d",
+    "apiDomain":"https://api.weixin.qq.com/",
+    "apiURL":{
+        "accessTokenApi":"%scgi-bin/token?grant_type=client_credential&appid=%s&secret=%s",
+        "createMenu":"%scgi-bin/menu/create?access_token=%s"
+    },
+    "turningAIURL" : "http://openapi.tuling123.com/openapi/api/v2",
+    "turningAIApiKey" : "9d4b7eef4dd84cc897b71e284dae7955"
+}

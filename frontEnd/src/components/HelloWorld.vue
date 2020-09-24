@@ -4,3 +4,17 @@
     <router-link to="/personalInfo"><v-btn color="primary">查看个人信息</v-btn></router-link>
   </v-content>
 </template>
+<script>
+export default {
+  name: 'HelloWorld',
+  props: {
+
+  },
+  data () {
+    return {
+      personalInfoMsg: "点击此处查看",
+      hasInfo:true,
+    }
+  },
+}
+</script>

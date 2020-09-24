@@ -15,5 +15,5 @@ new Vue({
   vuetify: new Vuetify(),
   props: {
     source: String,
-  },
+  }
 }).$mount('#app')

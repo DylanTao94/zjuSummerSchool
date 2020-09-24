@@ -52,14 +52,14 @@
               <v-spacer></v-spacer>
               <v-btn color="primary" @click="submit()">
                 <span v-if="!submitting">提交</span>
-                
-                    <v-progress-circular
-      :size="20"
-      color="white"
-      indeterminate
-      :width="1.5"
-      v-if="submitting"
-    ></v-progress-circular>
+
+                <v-progress-circular
+                  :size="20"
+                  color="white"
+                  indeterminate
+                  :width="1.5"
+                  v-if="submitting"
+                ></v-progress-circular>
               </v-btn>
             </v-card-actions>
           </v-card>
